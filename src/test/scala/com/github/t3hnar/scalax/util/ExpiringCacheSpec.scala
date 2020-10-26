@@ -44,6 +44,27 @@ class ExpiringCacheSpec extends Specification {
       cache.map.size must eventually(beEqualTo(1))
     }
 
+    "remove values" in new ExpiringCacheScope {
+      cache.map must haveSize(0)
+      cache.queryCount mustEqual 0
+
+      cache.put(0, "0")
+      cache.get(0) must beSome("0")
+
+      cache.remove(0)
+      cache.get(0) must beNone
+    }
+
+    /*"return current time in milliseconds" in new ExpiringCacheScope {
+
+      cache.map must haveSize(0)
+      cache.queryCount mustEqual 0
+
+      cache.put(1, "1")
+      cache.cleanExpired()
+      cache.get(1) must beNone
+
+    }*/
   }
 
   class ExpiringCacheScope extends Scope {
